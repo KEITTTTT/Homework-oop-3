@@ -1,6 +1,7 @@
 package transport;
 
 import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Car extends Transport {
 
@@ -25,18 +26,19 @@ public class Car extends Transport {
                int numberOfSeats,
                boolean winterTires) {
         super(brand, model, manufacturingYear, manufactureCountry, color, maxSpeed, fuelType);
-        if (engineVolume<=0){
-            this.engineVolume = 0;}
-        else {this.engineVolume = engineVolume;
+        if (engineVolume <= 0) {
+            this.engineVolume = 0;
+        } else {
+            this.engineVolume = engineVolume;
         }
-        if(transmission == null || transmission.isEmpty()){
+        if (transmission == null || transmission.isEmpty()) {
             this.transmission = "default";
-        }else {
+        } else {
             this.transmission = transmission;
         }
-        if(bodyType == null || bodyType.isEmpty()){
+        if (bodyType == null || bodyType.isEmpty()) {
             this.bodyType = "default";
-        }else {
+        } else {
             this.bodyType = bodyType;
         }
         setRegNumber(regNumber);
@@ -54,6 +56,26 @@ public class Car extends Transport {
 
     public void setEngineVolume(double engineVolume) {
         this.engineVolume = engineVolume;
+    }
+
+    public void startMovement() {
+        System.out.printf("Car %s %s started moving ", this.getBrand(), this.getModel());
+    }
+
+    public void stopMovement() {
+        System.out.printf("Car %s %s stopped moving ", this.getBrand(), this.getModel());
+    }
+
+    public void pitStop() {
+        System.out.printf("Car %s %s performed pit-stop ", this.getBrand(), this.getModel());
+    }
+
+    public int getBestLapTime() {
+        return ThreadLocalRandom.current().nextInt(1, 100);
+    }
+
+    public int getMaxSpeed() {
+        return ThreadLocalRandom.current().nextInt(1, 400);
     }
 
 
@@ -110,8 +132,8 @@ public class Car extends Transport {
         if (this.regNumber.length() != 9) {
             return false;
         }
-        char [] regNumberChars = this.regNumber.toCharArray();
-        return isNumberLetter (regNumberChars[0])
+        char[] regNumberChars = this.regNumber.toCharArray();
+        return isNumberLetter(regNumberChars[0])
                 && isNumberLetter(regNumberChars[1])
                 && isNumberLetter(regNumberChars[2])
                 && isNumberLetter(regNumberChars[3])
@@ -122,10 +144,12 @@ public class Car extends Transport {
                 && isNumberLetter(regNumberChars[8]);
     }
 
-    private boolean isNumber(char symbol) { return Character.isDigit(symbol);
+    private boolean isNumber(char symbol) {
+        return Character.isDigit(symbol);
     }
-    private boolean isNumberLetter(char symbol){
-        String alloweSymbols= "AOBEKMNTCPXY";
+
+    private boolean isNumberLetter(char symbol) {
+        String alloweSymbols = "AOBEKMNTCPXY";
         return alloweSymbols.contains("" + symbol);
     }
 
@@ -138,12 +162,12 @@ public class Car extends Transport {
         }
     }
 
-        @Override
+    @Override
     protected String checkFuelTypeOrDefault(String fuelType) {
         return null;
     }
 
-    public static class Key{
+    public static class Key {
         private final boolean remoteEngineStart;
         private final boolean keylessAccess;
 
@@ -151,30 +175,36 @@ public class Car extends Transport {
             this.remoteEngineStart = remoteEngineStart;
             this.keylessAccess = keylessAccess;
         }
-        public boolean isRemoteEngineStart(){
+
+        public boolean isRemoteEngineStart() {
             return remoteEngineStart;
         }
-        public boolean isKeylessAccess(){
+
+        public boolean isKeylessAccess() {
             return keylessAccess;
         }
     }
-    public static class Insurance{
+
+    public static class Insurance {
         private final LocalDate validUntil;
         private final float cost;
         private final String number;
 
         public Insurance(LocalDate validUntil, float cost, String number) {
-            this.validUntil = validUntil!=null ? validUntil:LocalDate.now().plusDays(10);
-            this.cost = Math.max(cost,1f);
-            if(number!=null && !number.isEmpty() && number.length()==9){
-            this.number = number;
+            this.validUntil = validUntil != null ? validUntil : LocalDate.now().plusDays(10);
+            this.cost = Math.max(cost, 1f);
+            if (number != null && !number.isEmpty() && number.length() == 9) {
+                this.number = number;
             } else {
-                this.number="Номер некорректный";}
+                this.number = "Номер некорректный";
+            }
         }
-        public boolean isNumberValid(){
+
+        public boolean isNumberValid() {
             return number.length() == 9;
         }
-        public boolean isInsuranceValid(){
+
+        public boolean isInsuranceValid() {
             return LocalDate.now().isBefore(this.validUntil);
         }
 

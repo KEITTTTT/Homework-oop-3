@@ -2,14 +2,13 @@ package transport;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Bus extends Transport {
-
-    public Bus(String brand, String model, int manufacturingYear, String manufactureCountry, String color, int maxSpeed, String fuelType) {
+public class Truck extends Transport {
+    public Truck(String brand, String model, int manufacturingYear, String manufactureCountry, String color, int maxSpeed, String fuelType) {
         super(brand, model, manufacturingYear, manufactureCountry, color, maxSpeed, fuelType);
     }
 
     public void info() {
-        System.out.println("Автобус " + getBrand() + " " + getModel() + "," + getManufacturingYear() + " года выпуска, сборка страны "
+        System.out.println("Грузовой автомобиль " + getBrand() + " " + getModel() + "," + getManufacturingYear() + " года выпуска, сборка страны "
                 + getManufactureCountry() + ", цвет " + getColor() +
                 ", максимальная скорость " + getMaxSpeed() + ", используемое топливо " + fuelType);
     }
@@ -26,15 +25,15 @@ public class Bus extends Transport {
 
 
     public void startMovement() {
-        System.out.printf("Bus %s %s started moving ", this.getBrand(), this.getModel());
+        System.out.printf("Truck %s %s started moving ", this.getBrand(), this.getModel());
     }
 
     public void stopMovement() {
-        System.out.printf("Bus %s %s stopped moving ", this.getBrand(), this.getModel());
+        System.out.printf("Truck %s %s stopped moving ", this.getBrand(), this.getModel());
     }
 
     public void pitStop() {
-        System.out.printf("Bus %s %s performed pit-stop ", this.getBrand(), this.getModel());
+        System.out.printf("Truck %s %s performed pit-stop ", this.getBrand(), this.getModel());
     }
 
     public int getBestLapTime() {
@@ -45,3 +44,5 @@ public class Bus extends Transport {
         return ThreadLocalRandom.current().nextInt(1, 400);
     }
 }
+
+

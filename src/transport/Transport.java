@@ -9,6 +9,7 @@ public abstract class Transport {
     private int maxSpeed;
     protected final String fuelType;
 
+
     public Transport(String brand,
                      String model,
                      int manufacturingYear,
@@ -48,6 +49,10 @@ public abstract class Transport {
     public abstract void refill();
 
     protected abstract String checkFuelTypeOrDefault(String fuelType);
+
+    public abstract void startMovement();
+
+    public abstract void stopMovement();
 
     public String getBrand() {
         return brand;
